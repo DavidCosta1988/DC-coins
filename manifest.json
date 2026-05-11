@@ -1,0 +1,25 @@
+{
+  "name": "DC coins",
+  "short_name": "DC coins",
+  "description": "A tua coleção de moedas de euro",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#180404",
+  "theme_color": "#180404",
+  "orientation": "portrait",
+  "lang": "pt",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
