@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#180404">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,8 +24,8 @@
   --lt:#1a1a1a;--lt2:#555;--lt3:#999;--lbr:#e0e0e0;
   --ac:#c0392b;
 }
-html,body{height:100%;background:var(--dk);font-family:system-ui,-apple-system,sans-serif;overflow:hidden}
-.app{max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column}
+html,body{min-height:100dvh;background:var(--dk);font-family:system-ui,-apple-system,sans-serif}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
 .screens{flex:1;overflow:hidden;position:relative;min-height:0;display:flex;flex-direction:column}
 .sc{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .15s}
 .sc.on{opacity:1;pointer-events:all}
