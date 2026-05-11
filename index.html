@@ -588,14 +588,59 @@ let curMCtry=null,curFlt='t';
 function rML(){
   const list=document.getElementById('m-list');list.innerHTML='';
   COUNTRIES.forEach(c=>{
-    const coins=CM[c.name]||[];if(!coins.length)return;
-    let own=0,tot=0;coins.forEach(m=>{const ml=(m.deMints&&cfg.deLetters)?5:1;tot+=ml;const v=gM(c.name,m.year,m.name);if(m.deMints&&cfg.deLetters){DEL.forEach(l=>{if(tQ((v.deQty||{})[l]||{}))own++;});}else{if(isOwn(v))own++;}});
-    const ncol=coins.filter(x=>x.serie==='colorida').length;
-    const cls=own===0?'':own===tot?'dn':'pt';
-    const row=document.createElement('div');row.className='clr';
-    row.innerHTML=`<span class="flg">${c.flag}</span><div class="cni"><div class="cnn">${c.name}</div><div class="cns">${tot} moedas${ncol>0?' · '+ncol+' coloridas':''}</div></div><span class="cbg ${cls}">${own}/${tot}</span><span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>`;
-    row.onclick=()=>oMD(c);list.appendChild(row);
+
+  const coins=CM[c.name]||[];
+
+  let own=0,tot=0;
+
+  coins.forEach(m=>{
+    const ml=(m.deMints&&cfg.deLetters)?5:1;
+    tot+=ml;
+
+    const v=gM(c.name,m.year,m.name);
+
+    if(m.deMints&&cfg.deLetters){
+      DEL.forEach(l=>{
+        if(tQ((v.deQty||{})[l]||{})) own++;
+      });
+    } else {
+      if(isOwn(v)) own++;
+    }
   });
+
+  const ncol=coins.filter(x=>x.serie==='colorida').length;
+
+  const cls=own===0?'':own===tot&&tot>0?'dn':'pt';
+
+  const row=document.createElement('div');
+  row.className='clr';
+
+  row.innerHTML=`
+    <span class="flg">${c.flag}</span>
+
+    <div class="cni">
+      <div class="cnn">${c.name}</div>
+
+      <div class="cns">
+        ${
+          tot>0
+          ? `${tot} moedas${ncol>0?' · '+ncol+' coloridas':''}`
+          : 'Sem moedas registadas'
+        }
+      </div>
+    </div>
+
+    <span class="cbg ${cls}">
+      ${own}/${tot}
+    </span>
+
+    <span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>
+  `;
+
+  row.onclick=()=>oMD(c);
+
+  list.appendChild(row);
+});
 }
 
 function sFt(f){
