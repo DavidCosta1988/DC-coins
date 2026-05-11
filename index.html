@@ -244,8 +244,8 @@ html,body{min-height:100dvh;background:var(--dk);font-family:system-ui,-apple-sy
 <div class="sc" id="s-comm-d" style="background:var(--lb)">
   <div class="hd lt"><div class="hdb" onclick="go('s-comm')">←</div><div style="flex:1"><div class="hdt" id="md-ttl">—</div><div class="hds" id="md-sub">—</div></div></div>
   <div class="ftabs" id="md-tabs" style="display:none">
-    <div class="ft on" id="ft-t" onclick="sFt('t')">Comemorativas</div>
-    <div class="ft" id="ft-c" onclick="sFt('c')">🎨 Coloridas</div>
+    <div class="ft on" id="ft-t" onclick="sFt('t')">Normais</div>
+    <div class="ft" id="ft-c" onclick="sFt('c')">Coloridas</div>
     <div class="ft" id="ft-s" onclick="sFt('s')">Séries Comuns</div>
   </div>
   <div class="sa" id="md-list"></div>
@@ -682,9 +682,16 @@ function oMD(c){
 function rMCoins(c){
   const cont=document.getElementById('md-list');cont.innerHTML='';
   const allCoins=(CM[c.name]||[]).slice().sort((a,b)=>b.year-a.year);
-  let coins=allCoins;
-  if(curFlt==='c')coins=allCoins.filter(m=>m.serie==='colorida');
-  else if(curFlt==='s')coins=allCoins.filter(m=>m.serie==='comum');
+ let coins=[];
+
+if(curFlt==='t')
+  coins=allCoins.filter(m=>m.serie==='comum');
+
+else if(curFlt==='c')
+  coins=allCoins.filter(m=>m.serie==='colorida');
+
+else if(curFlt==='s')
+  coins=allCoins.filter(m=>m.serie==='seriecomum');
 
   if(!coins.length){cont.innerHTML='<div style="text-align:center;padding:40px 16px;color:var(--lt3);font-size:13px">Nenhuma moeda nesta categoria.</div>';return;}
 
@@ -698,7 +705,15 @@ function rMCoins(c){
       const open=data.open||false;
       const row=document.createElement('div');row.className='ci';
       const isCol=m.serie==='colorida';
-      row.innerHTML=`<div class="ci-img ${own?'owned':''}">${isCol?`2€<div class="ctag">col.</div>`:'2€'}</div><div class="ci-info"><div class="ci-name">${m.name}</div><div class="ci-serie ${m.serie}">${isCol?'🎨 Colorida':'Série Comum'} · Comemorativa</div>${mBars(mt)}</div><div class="ci-right"><div class="ci-ctry"><span class="ci-ctry-flag">${c.flag}</span><div class="ci-ctry-info"><span class="ci-ctry-name">${c.name}</span><span class="ci-ctry-year">${m.year}</span></div></div><div class="qty-d ${own?'hv':''}">${own?cnt:0} <span>▼</span></div></div>`;
+      row.innerHTML=`<div class="ci-img ${own?'owned':''}">${isCol?`2€<div class="ctag">col.</div>`:'2€'}</div><div class="ci-info"><div class="ci-name">${m.name}</div><div class="ci-serie ${m.serie}">
+${
+  m.serie==='colorida'
+    ? '🎨 Colorida'
+    : m.serie==='seriecomum'
+      ? '📚 Série comum'
+      : 'Normal'
+}
+</div>${mBars(mt)}</div><div class="ci-right"><div class="ci-ctry"><span class="ci-ctry-flag">${c.flag}</span><div class="ci-ctry-info"><span class="ci-ctry-name">${c.name}</span><span class="ci-ctry-year">${m.year}</span></div></div><div class="qty-d ${own?'hv':''}">${own?cnt:0} <span>▼</span></div></div>`;
       row.onclick=()=>{
         if(!mD[key])mD[key]={qty:eq(),deQty:edq(),open:false};
         if(!isOwn(mD[key])){if(isDE)mD[key].deQty.A.UNC=1;else mD[key].qty.UNC=1;mD[key].open=true;}
