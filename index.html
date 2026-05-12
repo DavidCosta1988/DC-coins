@@ -778,7 +778,15 @@ else if(curFlt==='s')
     byYear[yr].forEach(m=>{
       const key=c.name+'|'+m.year+'|'+m.name;
       const isDE=(m.deMints&&cfg.deLetters);
-      const data=gM(c.name,m.year,m.name);const own=isOwn(data);const cnt=oCnt(data);const mt=m.mintage||{};
+      const data=gM(c.name,m.year,m.name);
+
+if(!data.deQty){
+  data.deQty=edq();
+}
+
+const own=isOwn(data);
+const cnt=oCnt(data);
+const mt=m.mintage||{};
       const open=data.open||false;
       const row=document.createElement('div');row.className='ci';
 const isCol=m.serie==='colorida';
