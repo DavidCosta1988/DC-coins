@@ -786,7 +786,7 @@ const isCol=m.serie==='colorida';
 row.innerHTML=`<div class="ci-img ${own?'owned':''}">
 ${
   m.img
-    ? `<img src="${m.img}" class="coin-photo">`
+  ? `<img src="${m.img}" class="coin-photo" onclick="openImgModal('${m.img}');event.stopPropagation()">`
     : (
         isCol
           ? `2€<div class="ctag">col.</div>`
@@ -935,14 +935,21 @@ if('serviceWorker' in navigator){
   });
   navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());
 }
+function openImgModal(src){
+  document.getElementById('imgModal').style.display='flex';
+  document.getElementById('imgModalSrc').src=src;
+}
 
+function closeImgModal(){
+  document.getElementById('imgModal').style.display='none';
+}
 // ── INIT ──────────────────────────────────────────
 initCfg();updSt();rCL();rML();
 </script>
 
 <div id="imgModal" class="img-modal" onclick="closeImgModal()">
-  <img id="imgModalSrc" class="img-modal-content">
+  <img id="imgModalSrc" class="img-modal-content" onclick="event.stopPropagation()">
 </div>
-
+  
 </body>
 </html>
