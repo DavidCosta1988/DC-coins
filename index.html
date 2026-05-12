@@ -548,7 +548,22 @@ function edq(){const o={};DEL.forEach(l=>{o[l]={UNC:0,BE:0,PROOF:0};});return o;
 function gC(c,y,d){return cD[c+'|'+y+'|'+d]||{qty:eq(),deQty:edq(),open:false};}
 function gM(c,y,n){return mD[c+'|'+y+'|'+n]||{qty:eq(),deQty:edq(),open:false};}
 function tQ(q){return(q.UNC||0)+(q.BE||0)+(q.PROOF||0);}
-function isOwn(e){if(e.qty&&tQ(e.qty)>0)return true;if(e.deQty){for(const l of DEL){if(tQ(e.deQty[l]||{}))return true;}}return false;}
+function isOwn(e,isDE=false){
+
+  if(!isDE){
+    return e.qty && tQ(e.qty)>0;
+  }
+
+  if(e.deQty){
+    for(const l of DEL){
+      if(tQ(e.deQty[l] || {})){
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
 function oCnt(e,isDE=false){
 
   if(isDE && e.deQty){
@@ -644,7 +659,7 @@ function rCoinList(c){
     const sep=document.createElement('div');sep.className='yr-sep';sep.textContent=yr;cont.appendChild(sep);
     DNS.forEach(d=>{
       const key=c.name+'|'+yr+'|'+d;
-      const data=gC(c.name,yr,d);const own=isOwn(data);const cnt=oCnt(data,isDE);const mt=DMT[d]||{};
+      const data=gC(c.name,yr,d);const own=isOwn(data,isDE);const cnt=oCnt(data,isDE);const mt=DMT[d]||{};
       const open=data.open||false;
       // coin row
       const row=document.createElement('div');row.className='ci';
@@ -797,7 +812,7 @@ if(!data.deQty){
   data.deQty=edq();
 }
 
-const own=isOwn(data);
+const own=isOwn(data,isDE);
 const cnt=oCnt(data,isDE);
 const mt=m.mintage||{};
       const open=data.open||false;
