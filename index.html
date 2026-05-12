@@ -684,6 +684,7 @@ function rCoinList(c){
             TPS.forEach(tp=>{hr+=`<div class="mllqw"><span class="mllql">${tp}</span><input class="mllqi" type="number" min="0" inputmode="numeric" value="${lq[tp]||0}" onclick="event.stopPropagation()" onchange="sDEQ('${key}','${l}','${tp}',this.value,'c')"></div>`;});
             hr+=`</div>`;exp.innerHTML+=hr;
           });
+          cont.appendChild(exp);
         } else {
           exp.className='ci-expand';
           TPS.forEach(tp=>{exp.innerHTML+=`<div class="qrow"><span class="qtl">${tp}</span><input class="qin" type="number" min="0" inputmode="numeric" value="${(data.qty||{})[tp]||0}" onclick="event.stopPropagation()" onchange="sCQ('${key}','${tp}',this.value)"><span class="qmt">Tiragem: ${fm(mt[tp])}</span></div>`;});
