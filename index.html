@@ -718,7 +718,9 @@ ${
         if(!mD[key])mD[key]={qty:eq(),deQty:edq(),open:false};
         if(!isOwn(mD[key])){if(isDE)mD[key].deQty.A.UNC=1;else mD[key].qty.UNC=1;mD[key].open=true;}
         else if(!mD[key].open){mD[key].open=true;}
-        else{mD[key].qty=eq();mD[key].deQty=edq();mD[key].open=false;}
+        else{
+  mD[key].open=false;
+}
         sv();updSt();rMCoins(c);
       };
       cont.appendChild(row);
