@@ -740,10 +740,43 @@ ${
       }
     });
   });
+exp.innerHTML += `
+  <div style="display:flex;justify-content:flex-end;margin-top:10px">
+    <button
+      onclick="saveCoin('${key}')"
+      style="
+        background:#27ae60;
+        color:white;
+        border:none;
+        border-radius:10px;
+        padding:10px 18px;
+        font-size:13px;
+        font-weight:600;
+        cursor:pointer;
+      "
+    >
+      ✅ OK
+    </button>
+  </div>
+`;
+  
 }
 
 function sMQ(k,tp,v){if(!mD[k])mD[k]={qty:eq(),deQty:edq(),open:true};mD[k].qty[tp]=Math.max(0,parseInt(v)||0);sv();updSt();}
+function saveCoin(key){
 
+  if(mD[key]){
+    mD[key].open=false;
+  }
+
+  sv();
+  updSt();
+
+  if(curMCtry){
+    rMCoins(curMCtry);
+  }
+}
+  
 // ── SERVICE WORKER ────────────────────────────────
 let swW=null;
 function doUpd(){if(swW)swW.postMessage({type:'SKIP_WAITING'});else location.reload();}
