@@ -669,7 +669,7 @@ function rCL(){
   <div class="cnn">${c.name}</div>
 
   <div class="cns">
-    ${yrs.length} anos · ${tot} moedas
+   ${yrs.length} anos · ${tot} moedas · ${tot ? Math.round((own/tot)*100) : 0}%
   </div>
 
   <div class="cbg-wrapper">
@@ -862,7 +862,7 @@ function rML(){
   <div class="cns">
     ${
       tot>0
-      ? `${tot} moedas${ncol>0?' · '+ncol+' coloridas':''}`
+      ? `${tot} moedas${ncol>0?' · '+ncol+' coloridas':''} · ${tot ? Math.round((own/tot)*100) : 0}%`
       : 'Sem moedas registadas'
     }
   </div>
