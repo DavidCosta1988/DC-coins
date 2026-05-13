@@ -855,31 +855,33 @@ function rML(){
   row.innerHTML=`
   <span class="flg">${c.flag}</span>
 
-  <div class="cni">
+<div class="cni">
 
-    <div class="cnn">${c.name}</div>
+  <div class="cnn">${c.name}</div>
 
-    <div class="cns">
-      ${
-        tot>0
-        ? `${tot} moedas${ncol>0?' · '+ncol+' coloridas':''}`
-        : 'Sem moedas registadas'
-      }
-    </div>
-
-    <div class="cbg-wrapper">
-      <div
-        class="cbg-bar"
-        style="width:${tot ? Math.round((own/tot)*100) : 0}%">
-      </div>
-    </div>
-
+  <div class="cns">
+    ${
+      tot>0
+      ? `${tot} moedas${ncol>0?' · '+ncol+' coloridas':''}`
+      : 'Sem moedas registadas'
+    }
   </div>
 
-  <span class="cbg ${cls}">
-    ${own}/${tot}
-  </span>
+  <div class="cbg-wrapper">
+    <div
+      class="cbg-bar"
+      style="
+        width:${tot ? Math.round((own/tot)*100) : 0}%;
+        background:hsl(${tot ? Math.round((own/tot)*120) : 0}, 85%, 45%);
+      ">
+    </div>
+  </div>
 
+</div>
+
+<span class="cbg ${cls}">
+  ${own}/${tot}
+</span>
   <span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>
 `;
     
