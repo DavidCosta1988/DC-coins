@@ -765,7 +765,7 @@ exp.innerHTML+=hr;
 exp.innerHTML += `
   <div style="display:flex;justify-content:flex-end;margin-top:10px;">
     <button
-      onclick="saveCirculation('${key}')"
+      onclick="saveCirculation('${key}',this)"
       style="
         background:#27ae60;
         color:white;
@@ -1150,18 +1150,38 @@ function sMQ(k,tp,v){
   updSt();
 }
 
-function saveCirculation(key){
+function saveCirculation(key,btn){
 
   if(cD[key]){
     cD[key].open=false;
   }
 
+  if(navigator.vibrate){
+    navigator.vibrate(40);
+  }
+
+  if(btn){
+
+    btn.classList.add('save-ok');
+
+    btn.innerHTML='✓ Guardado';
+
+    setTimeout(()=>{
+      btn.classList.remove('save-ok');
+      btn.innerHTML='✅ OK';
+    },600);
+
+  }
+
   sv();
   updSt();
 
-  if(curCCtry){
-    rCoinList(curCCtry);
-  }
+  setTimeout(()=>{
+    if(curCCtry){
+      rCoinList(curCCtry);
+    }
+  },300);
+
 }
 
 function saveCoin(key,btn){
