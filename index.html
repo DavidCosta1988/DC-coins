@@ -709,9 +709,7 @@ exp.innerHTML += `
 cont.appendChild(exp);
         } else {
           exp.className='ci-expand';
-          TPS.forEach(tp=>{exp.innerHTML+=`<div class="qrow"><span class="qtl">${tp}</span><input class="qin" type="number" min="0" inputmode="numeric" value="${(data.qty||{})[tp]||0}" onclick="event.stopPropagation()" onchange="sCQ('${key}','${tp}',this.value)"><span class="qmt">Tiragem: ${fm(mt[tp])}</span></div>`;});
-        }
-        cont.appendChild(exp);
+          TPS.forEach(tp=>{  ...});exp.innerHTML += `  <div style="display:flex;justify-content:flex-end;margin-top:10px;">    <button      onclick="saveCirculation('${key}')"      style="        background:#27ae60;        color:white;        border:none;        border-radius:10px;        padding:10px 18px;        font-size:13px;        font-weight:600;        cursor:pointer;      "    >      ✅ OK    </button>  </div>`;cont.appendChild(exp);
       }
     });
   });
