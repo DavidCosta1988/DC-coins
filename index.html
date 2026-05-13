@@ -668,7 +668,9 @@ function rCoinList(c){
         if(!cD[key])cD[key]={qty:eq(),deQty:edq(),open:false};
         if(!isOwn(cD[key])){if(isDE)cD[key].deQty.A.UNC=1;else cD[key].qty.UNC=1;cD[key].open=true;}
         else if(!cD[key].open){cD[key].open=true;}
-        else{cD[key].qty=eq();cD[key].deQty=edq();cD[key].open=false;}
+        else{
+  cD[key].open=false;
+}
         sv();updSt();rCoinList(c);
       };
       cont.appendChild(row);
@@ -930,52 +932,77 @@ ${
   </div>
 </div>`;
 
-      row.onclick=()=>{
-        if(!mD[key])mD[key]={qty:eq(),deQty:edq(),open:false};
-        if(!isOwn(mD[key])){if(isDE)mD[key].deQty.A.UNC=1;else mD[key].qty.UNC=1;mD[key].open=true;}
-        else if(!mD[key].open){mD[key].open=true;}
-       else{
-  mD[key].qty=eq();
-  mD[key].deQty=edq();
-  mD[key].open=false;
-}
-        sv();updSt();rMCoins(c);
-      };
-      cont.appendChild(row);
-      if(open){
-        const exp=document.createElement('div');
-        if(isDE){
-          exp.className='mll';exp.innerHTML=`<div class="mllt">Casa da Moeda</div>`;
-          DEL.forEach(l=>{
-            const lq=(data.deQty||{})[l]||{UNC:0,BE:0,PROOF:0};
-            let hr=`<div class="mllr"><div class="mllb">${l}</div><div class="mllc">${DEM[l]}</div>`;
-            TPS.forEach(tp=>{hr+=`<div class="mllqw"><span class="mllql">${tp}</span><input class="mllqi" type="number" min="0" inputmode="numeric" value="${lq[tp]||0}" onclick="event.stopPropagation()" onchange="sDEQ('${key}','${l}','${tp}',this.value,'m')"></div>`;});
+     row.onclick=()=>{
+  if(!mD[key])mD[key]={qty:eq(),deQty:edq(),open:false};
 
-hr+=`</div>`;
-exp.innerHTML+=hr;
-});
+  if(!isOwn(mD[key])){
+    if(isDE)mD[key].deQty.A.UNC=1;
+    else mD[key].qty.UNC=1;
 
-exp.innerHTML += `
-  <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-    <button
-      onclick="saveCoin('${key}')"
-      style="
-        background:#27ae60;
-        color:white;
-        border:none;
-        border-radius:10px;
-        padding:10px 18px;
-        font-size:13px;
-        font-weight:600;
-        cursor:pointer;
-      "
-    >
-      ✅ OK
-    </button>
-  </div>
-`;
+    mD[key].open=true;
+  }
 
-cont.appendChild(exp);
+  else if(!mD[key].open){
+    mD[key].open=true;
+  }
+
+  else{
+    mD[key].open=false;
+  }
+
+  sv();
+  updSt();
+  rMCoins(c);
+};
+
+cont.appendChild(row);
+
+if(open){
+
+  const exp=document.createElement('div');
+
+  if(isDE){
+
+    exp.className='mll';
+    exp.innerHTML=`<div class="mllt">Casa da Moeda</div>`;
+
+    DEL.forEach(l=>{
+
+      const lq=(data.deQty||{})[l]||{UNC:0,BE:0,PROOF:0};
+
+      let hr=`<div class="mllr"><div class="mllb">${l}</div><div class="mllc">${DEM[l]}</div>`;
+
+      TPS.forEach(tp=>{
+        hr+=`<div class="mllqw"><span class="mllql">${tp}</span><input class="mllqi" type="number" min="0" inputmode="numeric" value="${lq[tp]||0}" onclick="event.stopPropagation()" onchange="sDEQ('${key}','${l}','${tp}',this.value,'m')"></div>`;
+      });
+
+      hr+=`</div>`;
+
+      exp.innerHTML+=hr;
+
+    });
+
+    exp.innerHTML += `
+      <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+        <button
+          onclick="saveCoin('${key}')"
+          style="
+            background:#27ae60;
+            color:white;
+            border:none;
+            border-radius:10px;
+            padding:10px 18px;
+            font-size:13px;
+            font-weight:600;
+            cursor:pointer;
+          "
+        >
+          ✅ OK
+        </button>
+      </div>
+    `;
+
+    cont.appendChild(exp);
        } else {
 
   exp.className='ci-expand';
