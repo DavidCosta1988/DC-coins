@@ -123,16 +123,38 @@ html,body{
 .cbg-bar {
   height: 100%;
   width: 0;
-background: linear-gradient(
-  90deg,
-  #d63031 0%,
-  #e17055 20%,
-  #fdcb6e 45%,
-  #00b894 75%,
-  #00cec9 100%
-);
+  background: linear-gradient(
+    90deg,
+    #d63031 0%,
+    #e17055 20%,
+    #fdcb6e 45%,
+    #00b894 75%,
+    #00cec9 100%
+  );
   border-radius: 4px;
   transition: width 0.4s ease;
+}
+
+.save-ok{
+  animation:savePop .45s ease;
+  background:#19c37d !important;
+  transform:scale(1.06);
+}
+
+@keyframes savePop{
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.12);
+  }
+
+  100%{
+    transform:scale(1.06);
+  }
+
 }
   
 /* HEADERS */
@@ -1048,7 +1070,7 @@ if(open){
     exp.innerHTML += `
       <div style="display:flex;justify-content:flex-end;margin-top:10px;">
         <button
-          onclick="saveCoin('${key}')"
+          onclick="saveCoin('${key}',this)"
           style="
             background:#27ae60;
             color:white;
@@ -1142,18 +1164,38 @@ function saveCirculation(key){
   }
 }
 
-function saveCoin(key){
+function saveCoin(key,btn){
 
   if(mD[key]){
     mD[key].open=false;
   }
 
+  if(navigator.vibrate){
+    navigator.vibrate(40);
+  }
+
+  if(btn){
+
+    btn.classList.add('save-ok');
+
+    btn.innerHTML='✓ Guardado';
+
+    setTimeout(()=>{
+      btn.classList.remove('save-ok');
+      btn.innerHTML='✅ OK';
+    },600);
+
+  }
+
   sv();
   updSt();
 
-  if(curMCtry){
-    rMCoins(curMCtry);
-  }
+  setTimeout(()=>{
+    if(curMCtry){
+      rMCoins(curMCtry);
+    }
+  },300);
+
 }
 
 
