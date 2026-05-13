@@ -993,6 +993,20 @@ function sMQ(k,tp,v){
   updSt();
 }
 
+function saveCirculation(key){
+
+  if(cD[key]){
+    cD[key].open=false;
+  }
+
+  sv();
+  updSt();
+
+  if(curCCtry){
+    rCoinList(curCCtry);
+  }
+}
+
 function saveCoin(key){
 
   if(mD[key]){
@@ -1006,6 +1020,7 @@ function saveCoin(key){
     rMCoins(curMCtry);
   }
 }
+
 
   
 // ── SERVICE WORKER ────────────────────────────────
