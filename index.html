@@ -110,7 +110,24 @@ html,body{
   max-width:480px;
   margin:0 auto
 }
+.cbg-wrapper {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--lb3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+}
 
+.cbg-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(135deg, var(--gn), var(--ac));
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+  
 /* HEADERS */
 .hd{padding:12px 16px 10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hd.dk{background:var(--dk);border-bottom:0.5px solid var(--bd)}
@@ -637,7 +654,31 @@ function rCL(){
     let own=0;yrs.forEach(y=>DNS.forEach(d=>{const v=gC(c.name,y,d);if(c.name==='Alemanha'&&cfg.deLetters){DEL.forEach(l=>{if(tQ((v.deQty||{})[l]||{}))own++;});}else{if(isOwn(v))own++;}}));
     const cls=own===0?'':own===tot?'dn':'pt';
     const row=document.createElement('div');row.className='clr';
-    row.innerHTML=`<span class="flg">${c.flag}</span><div class="cni"><div class="cnn">${c.name}</div><div class="cns">${yrs.length} anos · ${tot} moedas</div></div><span class="cbg ${cls}">${own}/${tot}</span><span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>`;
+   row.innerHTML=`
+  <span class="flg">${c.flag}</span>
+
+  <div class="cni">
+    <div class="cnn">${c.name}</div>
+
+    <div class="cns">
+      ${yrs.length} anos · ${tot} moedas
+    </div>
+
+    <div class="cbg-wrapper">
+      <div
+        class="cbg-bar"
+        style="width:${tot ? Math.round((own/tot)*100) : 0}%">
+      </div>
+    </div>
+
+  </div>
+
+  <span class="cbg ${cls}">
+    ${own}/${tot}
+  </span>
+
+  <span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>
+`;
     row.onclick=()=>oCMoedas(c);list.appendChild(row);
   });
 }
