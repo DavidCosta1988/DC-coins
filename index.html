@@ -298,6 +298,27 @@ html,body{
 .bii{font-size:22px;color:var(--tw3);transition:color .15s;line-height:1}
 .bil{font-size:9px;color:var(--tw3);transition:color .15s}
 .bi.on .bii,.bi.on .bil{color:var(--gold)}
+
+.qmt{
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  color:#fff;
+}
+
+.qmt-unc{
+  background:#27ae60;
+}
+
+.qmt-be{
+  background:#e74c3c;
+}
+
+.qmt-proof{
+  background:#2980b9;
+}
+
 </style>
 </head>
 <body>
@@ -1144,9 +1165,9 @@ else{
           onchange="sCQ('${key}','${tp}',this.value)"
         >
 
-        <span class="qmt">
-          Tiragem: ${fm(mt[tp])}
-        </span>
+        <span class="qmt qmt-${tp.toLowerCase()}">
+  ${fm(mt[tp])}
+</span>
 
       </div>
     `;
@@ -1454,9 +1475,9 @@ if(open){
           onchange="sMQ('${key}','${tp}',this.value)"
         >
 
-        <span class="qmt">
-          Tiragem: ${fm(mt[tp])}
-        </span>
+       <span class="qmt qmt-${tp.toLowerCase()}">
+  ${fm(mt[tp])}
+</span>
       </div>
     `;
 
