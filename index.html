@@ -693,18 +693,15 @@ function rCoinList(c){
   const cont=document.getElementById('cm-list');
   cont.innerHTML='';
 
-  const isDE=(c.name==='Alemanha'&&cfg.deLetters);
+  const isDE=(c.name==='Alemanha' && cfg.deLetters);
 
-  const yrs=(CY[c.name]||[])
-    .slice()
-    .sort((a,b)=>b-a);
+  const yrs=(CY[c.name] || []).slice().sort((a,b)=>b-a);
 
   yrs.forEach(yr=>{
 
     const sep=document.createElement('div');
     sep.className='yr-sep';
     sep.textContent=yr;
-
     cont.appendChild(sep);
 
     DNS.forEach(d=>{
@@ -715,11 +712,12 @@ function rCoinList(c){
 
       const own=isOwn(data,isDE);
       const cnt=oCnt(data,isDE);
-      const mt=DMT[d]||{};
 
-      const open=data.open||false;
+      const mt=DMT[d] || {};
 
-      // moeda
+      const open=data.open || false;
+
+      // CARD
       const row=document.createElement('div');
 
       row.className='ci';
@@ -737,7 +735,7 @@ function rCoinList(c){
 
           <div class="ci-serie circ">
             Circulação
-            ${isDE?' · <strong style="color:var(--gold)">A D F G J</strong>':''}
+            ${isDE ? ' · <strong style="color:var(--gold)">A D F G J</strong>' : ''}
           </div>
 
           ${mBars(mt)}
@@ -748,26 +746,21 @@ function rCoinList(c){
 
           <div class="ci-ctry">
 
-            <span class="ci-ctry-flag">
-              ${c.flag}
-            </span>
+            <span class="ci-ctry-flag">${c.flag}</span>
 
             <div class="ci-ctry-info">
 
-              <span class="ci-ctry-name">
-                ${c.name}
-              </span>
+              <span class="ci-ctry-name">${c.name}</span>
 
-              <span class="ci-ctry-year">
-                ${yr}
-              </span>
+              <span class="ci-ctry-year">${yr}</span>
 
             </div>
 
           </div>
 
           <div class="qty-d ${own?'hv':''}">
-            ${own?cnt:0} <span>▼</span>
+            ${own ? cnt : 0}
+            <span>▼</span>
           </div>
 
         </div>
@@ -785,31 +778,31 @@ function rCoinList(c){
 
         if(!isOwn(cD[key])){
 
-          if(isDE)
+          if(isDE){
             cD[key].deQty.A.UNC=1;
-          else
+          }else{
             cD[key].qty.UNC=1;
+          }
 
           cD[key].open=true;
-        }
 
-        else if(!cD[key].open){
+        }else if(!cD[key].open){
+
           cD[key].open=true;
-        }
 
-        else{
+        }else{
+
           cD[key].open=false;
         }
 
         sv();
         updSt();
         rCoinList(c);
-
       };
 
       cont.appendChild(row);
 
-      // expandido
+      // EXPAND
       if(open){
 
         const exp=document.createElement('div');
@@ -827,7 +820,7 @@ function rCoinList(c){
 
           DEL.forEach(l=>{
 
-            const lq=(data.deQty||{})[l]||{
+            const lq=(data.deQty || {})[l] || {
               UNC:0,
               BE:0,
               PROOF:0
@@ -838,9 +831,7 @@ function rCoinList(c){
 
                 <div class="mllb">${l}</div>
 
-                <div class="mllc">
-                  ${DEM[l]}
-                </div>
+                <div class="mllc">${DEM[l]}</div>
             `;
 
             TPS.forEach(tp=>{
@@ -848,29 +839,25 @@ function rCoinList(c){
               hr+=`
                 <div class="mllqw">
 
-                  <span class="mllql">
-                    ${tp}
-                  </span>
+                  <span class="mllql">${tp}</span>
 
                   <input
                     class="mllqi"
                     type="number"
                     min="0"
                     inputmode="numeric"
-                    value="${lq[tp]||0}"
+                    value="${lq[tp] || 0}"
                     onclick="event.stopPropagation()"
                     onchange="sDEQ('${key}','${l}','${tp}',this.value,'c')"
                   >
 
                 </div>
               `;
-
             });
 
             hr+=`</div>`;
 
             exp.innerHTML+=hr;
-
           });
 
         }
@@ -883,19 +870,16 @@ function rCoinList(c){
           TPS.forEach(tp=>{
 
             exp.innerHTML+=`
-
               <div class="qrow">
 
-                <span class="qtl">
-                  ${tp}
-                </span>
+                <span class="qtl">${tp}</span>
 
                 <input
                   class="qin"
                   type="number"
                   min="0"
                   inputmode="numeric"
-                  value="${(data.qty||{})[tp]||0}"
+                  value="${(data.qty || {})[tp] || 0}"
                   onclick="event.stopPropagation()"
                   onchange="sCQ('${key}','${tp}',this.value)"
                 >
@@ -906,14 +890,11 @@ function rCoinList(c){
 
               </div>
             `;
-
           });
-
         }
 
-        // botão guardar
+        // BOTÃO
         exp.innerHTML+=`
-
           <div style="display:flex;justify-content:flex-end;margin-top:10px;">
 
             <button
@@ -936,7 +917,6 @@ function rCoinList(c){
         `;
 
         cont.appendChild(exp);
-
       }
 
     });
