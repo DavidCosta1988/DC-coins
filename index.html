@@ -803,125 +803,120 @@ function rCoinList(c){
       cont.appendChild(row);
 
       // EXPAND
-      if(open){
+if(open){
 
-        const exp=document.createElement('div');
+  const exp=document.createElement('div');
 
-        // ALEMANHA
-        if(isDE){
+  // ALEMANHA
+  if(isDE){
 
-          exp.className='mll';
+    exp.className='mll';
 
-          exp.innerHTML=`
-            <div class="mllt">
-              Casa da Moeda
-            </div>
-          `;
+    exp.innerHTML=`
+      <div class="mllt">Casa da Moeda</div>
+    `;
 
-          DEL.forEach(l=>{
+    DEL.forEach(l=>{
 
-            const lq=(data.deQty || {})[l] || {
-              UNC:0,
-              BE:0,
-              PROOF:0
-            };
+      const lq=(data.deQty||{})[l]||{
+        UNC:0,
+        BE:0,
+        PROOF:0
+      };
 
-            let hr=`
-              <div class="mllr">
+      let hr=`
+        <div class="mllr">
 
-                <div class="mllb">${l}</div>
+          <div class="mllb">${l}</div>
+          <div class="mllc">${DEM[l]}</div>
+      `;
 
-                <div class="mllc">${DEM[l]}</div>
-            `;
+      TPS.forEach(tp=>{
 
-            TPS.forEach(tp=>{
+        hr+=`
+          <div class="mllqw">
 
-              hr+=`
-                <div class="mllqw">
+            <span class="mllql">${tp}</span>
 
-                  <span class="mllql">${tp}</span>
-
-                  <input
-                    class="mllqi"
-                    type="number"
-                    min="0"
-                    inputmode="numeric"
-                    value="${lq[tp] || 0}"
-                    onclick="event.stopPropagation()"
-                    onchange="sDEQ('${key}','${l}','${tp}',this.value,'c')"
-                  >
-
-                </div>
-              `;
-            });
-
-            hr+=`</div>`;
-
-            exp.innerHTML+=hr;
-          });
-
-        }
-
-        // NORMAL
-        else{
-
-          exp.className='ci-expand';
-
-          TPS.forEach(tp=>{
-
-            exp.innerHTML+=`
-              <div class="qrow">
-
-                <span class="qtl">${tp}</span>
-
-                <input
-                  class="qin"
-                  type="number"
-                  min="0"
-                  inputmode="numeric"
-                  value="${(data.qty || {})[tp] || 0}"
-                  onclick="event.stopPropagation()"
-                  onchange="sCQ('${key}','${tp}',this.value)"
-                >
-
-                <span class="qmt">
-                  Tiragem: ${fm(mt[tp])}
-                </span>
-
-              </div>
-            `;
-          });
-        }
-
-        // BOTÃO
-        exp.innerHTML+=`
-          <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-
-            <button
-              onclick="saveCirculation('${key}',this)"
-              style="
-                background:#27ae60;
-                color:white;
-                border:none;
-                border-radius:10px;
-                padding:10px 18px;
-                font-size:13px;
-                font-weight:600;
-                cursor:pointer;
-              "
+            <input
+              class="mllqi"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              value="${lq[tp]||0}"
+              onclick="event.stopPropagation()"
+              onchange="sDEQ('${key}','${l}','${tp}',this.value,'m')"
             >
-              ✅ OK
-            </button>
 
           </div>
         `;
+      });
 
-        cont.appendChild(exp);
-      }
+      hr+=`</div>`;
+
+      exp.innerHTML+=hr;
 
     });
 
-  });
+  }
+
+  // NORMAL
+  else{
+
+    exp.className='ci-expand';
+
+    TPS.forEach(tp=>{
+
+      exp.innerHTML += `
+        <div class="qrow">
+
+          <span class="qtl">${tp}</span>
+
+          <input
+            class="qin"
+            type="number"
+            min="0"
+            inputmode="numeric"
+            value="${(data.qty||{})[tp]||0}"
+            onclick="event.stopPropagation()"
+            onchange="sMQ('${key}','${tp}',this.value)"
+          >
+
+          <span class="qmt">
+            Tiragem: ${fm(mt[tp])}
+          </span>
+
+        </div>
+      `;
+
+    });
+
+  }
+
+  // BOTÃO OK
+  exp.innerHTML += `
+    <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+
+      <button
+        onclick="saveCoin('${key}',this)"
+        style="
+          background:#27ae60;
+          color:white;
+          border:none;
+          border-radius:10px;
+          padding:10px 18px;
+          font-size:13px;
+          font-weight:600;
+          cursor:pointer;
+        "
+      >
+        ✅ OK
+      </button>
+
+    </div>
+  `;
+
+  cont.appendChild(exp);
 
 }
 // ── COMEMORATIVAS ─────────────────────────────────
