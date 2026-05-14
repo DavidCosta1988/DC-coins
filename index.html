@@ -431,10 +431,10 @@ html,body{
 
 </div><!-- /screens -->
 <div class="bnav">
-  <div class="bi on" id="bn-h" onclick="goH()"><div class="bii">🏠</div><div class="bil">Início</div></div>
-  <div class="bi" id="bn-c" onclick="go('s-circ')"><div class="bii">🪙</div><div class="bil">Circulação</div></div>
-  <div class="bi" id="bn-m" onclick="go('s-comm')"><div class="bii">🏅</div><div class="bil">Comemorativas</div></div>
-  <div class="bi" id="bn-s" onclick="go('s-sett')"><div class="bii">⚙️</div><div class="bil">Definições</div></div>
+  <div class="bi on" id="bn-h" onclick="goH()"><div class="bii">🏠</div><div class="bil" id="txt-home"></div></div>
+  <div class="bi" id="bn-c" onclick="go('s-circ')"><div class="bii">🪙</div><div class="bil" id="txt-circulation"></div></div>
+  <div class="bi" id="bn-m" onclick="go('s-comm')"><div class="bii">🏅</div><div class="bil" id="txt-commemorative"></div></div>
+  <div class="bi" id="bn-s" onclick="go('s-sett')"><div class="bii">⚙️</div><div class="bil" id="txt-settings"></div></div>
 </div>
 </div>
 
@@ -581,57 +581,70 @@ const CM={
 
 };
 // ── STORAGE ──────────────────────────────────────
-let cD={},mD={},cfg={deLetters:false,showColoridas:true,showComuns:true};
-try{cD=JSON.parse(localStorage.getItem('dc_c')||'{}');}catch(e){}
-try{mD=JSON.parse(localStorage.getItem('dc_m')||'{}');}catch(e){}
-try{const s=JSON.parse(localStorage.getItem('dc_s')||'{}');cfg={...cfg,...s};}catch(e){}
-function sv(){try{localStorage.setItem('dc_c',JSON.stringify(cD));localStorage.setItem('dc_m',JSON.stringify(mD));localStorage.setItem('dc_s',JSON.stringify(cfg));}catch(e){}}
+let cD={},mD={},cfg={
+  deLetters:false,
+  showColoridas:true,
+  showComuns:true,
+  lang:'pt'
+};
 
-// ── HELPERS ──────────────────────────────────────
-function fm(n){if(!n||n===0)return'—';if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'k';return''+n;}
-function eq(){return{UNC:0,BE:0,PROOF:0};}
-function edq(){const o={};DEL.forEach(l=>{o[l]={UNC:0,BE:0,PROOF:0};});return o;}
-function gC(c,y,d){return cD[c+'|'+y+'|'+d]||{qty:eq(),deQty:edq(),open:false};}
-function gM(c,y,n){return mD[c+'|'+y+'|'+n]||{qty:eq(),deQty:edq(),open:false};}
-function tQ(q){return(q.UNC||0)+(q.BE||0)+(q.PROOF||0);}
-function isOwn(e,isDE=false){
+// ── LANGUAGES ────────────────────────────────────
+const LANG = {
 
-  if(!isDE){
-    return e.qty && tQ(e.qty)>0;
+  pt: {
+    circulation:'Circulação',
+    commemorative:'Comemorativas',
+    settings:'Definições',
+    home:'Início',
+    total:'Total',
+    owned:'Tenho',
+    missing:'Em falta',
+    repeated:'Repetidas',
+    exportCollection:'Exportar coleção',
+    deleteAll:'Apagar tudo',
+    privacy:'Política de Privacidade'
+  },
+
+  en: {
+    circulation:'Circulation',
+    commemorative:'Commemorative',
+    settings:'Settings',
+    home:'Home',
+    total:'Total',
+    owned:'Owned',
+    missing:'Missing',
+    repeated:'Duplicates',
+    exportCollection:'Export collection',
+    deleteAll:'Delete all',
+    privacy:'Privacy Policy'
   }
 
-  if(e.deQty){
-    for(const l of DEL){
-      if(tQ(e.deQty[l] || {})){
-        return true;
-      }
-    }
-  }
+};
 
-  return false;
+// ── TRANSLATE FUNCTION ───────────────────────────
+function t(k){
+  return LANG[cfg.lang]?.[k] || k;
 }
-function oCnt(e,isDE=false){
 
-  if(isDE && e.deQty){
-    let t=0;
+try{
+  cD=JSON.parse(localStorage.getItem('dc_c')||'{}');
+}catch(e){}
 
-    DEL.forEach(l=>{
-      t += tQ(e.deQty[l] || {});
-    });
+try{
+  mD=JSON.parse(localStorage.getItem('dc_m')||'{}');
+}catch(e){}
 
-    return t;
-  }
+try{
+  const s=JSON.parse(localStorage.getItem('dc_s')||'{}');
+  cfg={...cfg,...s};
+}catch(e){}
 
-  return tQ(e.qty || {});
-}
-
-function mBars(mt){
-  if(!mt)return'';
-  const p=[];
-  if(mt.UNC)p.push(`<span class="cib u">${fm(mt.UNC)}</span>`);
-  if(mt.BE)p.push(`<span class="cib b">${fm(mt.BE)}</span>`);
-  if(mt.PROOF)p.push(`<span class="cib p">${fm(mt.PROOF)}</span>`);
-  return p.length?`<div class="ci-bars">${p.join('')}</div>`:'';
+function sv(){
+  try{
+    localStorage.setItem('dc_c',JSON.stringify(cD));
+    localStorage.setItem('dc_m',JSON.stringify(mD));
+    localStorage.setItem('dc_s',JSON.stringify(cfg));
+  }catch(e){}
 }
 
 // ── STATS ────────────────────────────────────────
@@ -1240,8 +1253,23 @@ function openImgModal(src){
 function closeImgModal(){
   document.getElementById('imgModal').style.display='none';
 }
+  function applyLang(){
+
+  document.getElementById('txt-home').textContent=t('home');
+
+  document.getElementById('txt-circulation').textContent=t('circulation');
+
+  document.getElementById('txt-commemorative').textContent=t('commemorative');
+
+  document.getElementById('txt-settings').textContent=t('settings');
+
+}
 // ── INIT ──────────────────────────────────────────
-initCfg();updSt();rCL();rML();
+initCfg();
+applyLang();
+updSt();
+rCL();
+rML();
 </script>
 
 <div id="imgModal" class="img-modal" onclick="closeImgModal()">
