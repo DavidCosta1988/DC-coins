@@ -688,20 +688,121 @@ function oSt(g,tp){
   go('s-stats');
 }
 
+let curCCtry=null;
+
+function rCL(){
+
+  const list=document.getElementById('c-list');
+  list.innerHTML='';
+
+  COUNTRIES.forEach(c=>{
+
+    const yrs=CY[c.name]||[];
+
+    const mult=(c.name==='Alemanha' && cfg.deLetters)?5:1;
+
+    const total=yrs.length*8*mult;
+
+    let own=0;
+
+    yrs.forEach(y=>{
+
+      DNS.forEach(d=>{
+
+        const v=gC(c.name,y,d);
+
+        if(c.name==='Alemanha' && cfg.deLetters){
+
+          DEL.forEach(l=>{
+            if(tQ((v.deQty||{})[l]||{})) own++;
+          });
+
+        }else{
+
+          if(isOwn(v)) own++;
+        }
+
+      });
+
+    });
+
+    const perc=total?Math.round((own/total)*100):0;
+
+    const cls=own===0?'':own===total&&total>0?'dn':'pt';
+
+    const row=document.createElement('div');
+
+    row.className='clr';
+
+    row.innerHTML=`
+      <span class="flg">${c.flag}</span>
+
+      <div class="cni">
+
+        <div class="cnn">${c.name}</div>
+
+        <div class="cns">
+          ${total} moedas · ${perc}%
+        </div>
+
+        <div class="cbg-wrapper">
+          <div
+            class="cbg-bar"
+            style="
+              width:${perc}%;
+              background:hsl(${perc*1.2},85%,45%);
+            ">
+          </div>
+        </div>
+
+      </div>
+
+      <span class="cbg ${cls}">
+        ${own}/${total}
+      </span>
+
+      <span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>
+    `;
+
+    row.onclick=()=>{
+
+      curCCtry=c;
+
+      document.getElementById('cm-ttl').textContent=
+        c.flag+' '+c.name;
+
+      document.getElementById('cm-sub').textContent=
+        total+' moedas';
+
+      rCoinList(c);
+
+      go('s-cmoedas');
+    };
+
+    list.appendChild(row);
+
+  });
+
+}
+
 function rCoinList(c){
 
   const cont=document.getElementById('cm-list');
+
   cont.innerHTML='';
 
   const isDE=(c.name==='Alemanha' && cfg.deLetters);
 
-  const yrs=(CY[c.name] || []).slice().sort((a,b)=>b-a);
+  const yrs=(CY[c.name]||[]).slice().sort((a,b)=>b-a);
 
   yrs.forEach(yr=>{
 
     const sep=document.createElement('div');
+
     sep.className='yr-sep';
+
     sep.textContent=yr;
+
     cont.appendChild(sep);
 
     DNS.forEach(d=>{
@@ -711,13 +812,13 @@ function rCoinList(c){
       const data=gC(c.name,yr,d);
 
       const own=isOwn(data,isDE);
+
       const cnt=oCnt(data,isDE);
 
-      const mt=DMT[d] || {};
+      const mt=DMT[d]||{};
 
-      const open=data.open || false;
+      const open=data.open||false;
 
-      // CARD
       const row=document.createElement('div');
 
       row.className='ci';
@@ -769,6 +870,7 @@ function rCoinList(c){
       row.onclick=()=>{
 
         if(!cD[key]){
+
           cD[key]={
             qty:eq(),
             deQty:edq(),
@@ -802,121 +904,9 @@ function rCoinList(c){
 
       cont.appendChild(row);
 
-      // EXPAND
-if(open){
-
-  const exp=document.createElement('div');
-
-  // ALEMANHA
-  if(isDE){
-
-    exp.className='mll';
-
-    exp.innerHTML=`
-      <div class="mllt">Casa da Moeda</div>
-    `;
-
-    DEL.forEach(l=>{
-
-      const lq=(data.deQty||{})[l]||{
-        UNC:0,
-        BE:0,
-        PROOF:0
-      };
-
-      let hr=`
-        <div class="mllr">
-
-          <div class="mllb">${l}</div>
-          <div class="mllc">${DEM[l]}</div>
-      `;
-
-      TPS.forEach(tp=>{
-
-        hr+=`
-          <div class="mllqw">
-
-            <span class="mllql">${tp}</span>
-
-            <input
-              class="mllqi"
-              type="number"
-              min="0"
-              inputmode="numeric"
-              value="${lq[tp]||0}"
-              onclick="event.stopPropagation()"
-              onchange="sDEQ('${key}','${l}','${tp}',this.value,'m')"
-            >
-
-          </div>
-        `;
-      });
-
-      hr+=`</div>`;
-
-      exp.innerHTML+=hr;
-
     });
 
-  }
-
-  // NORMAL
-  else{
-
-    exp.className='ci-expand';
-
-    TPS.forEach(tp=>{
-
-      exp.innerHTML += `
-        <div class="qrow">
-
-          <span class="qtl">${tp}</span>
-
-          <input
-            class="qin"
-            type="number"
-            min="0"
-            inputmode="numeric"
-            value="${(data.qty||{})[tp]||0}"
-            onclick="event.stopPropagation()"
-            onchange="sMQ('${key}','${tp}',this.value)"
-          >
-
-          <span class="qmt">
-            Tiragem: ${fm(mt[tp])}
-          </span>
-
-        </div>
-      `;
-
-    });
-
-  }
-
-  // BOTÃO OK
-  exp.innerHTML += `
-    <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-
-      <button
-        onclick="saveCoin('${key}',this)"
-        style="
-          background:#27ae60;
-          color:white;
-          border:none;
-          border-radius:10px;
-          padding:10px 18px;
-          font-size:13px;
-          font-weight:600;
-          cursor:pointer;
-        "
-      >
-        ✅ OK
-      </button>
-
-    </div>
-  `;
-
-  cont.appendChild(exp);
+  });
 
 }
 // ── COMEMORATIVAS ─────────────────────────────────
