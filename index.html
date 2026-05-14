@@ -247,7 +247,30 @@ html,body{
 .qtl{font-size:11px;font-weight:600;width:38px;flex-shrink:0;color:var(--lt2)}
 .qin{width:52px;background:#fff;border:1px solid var(--lbr);border-radius:8px;padding:5px 6px;color:var(--lt);font-size:14px;text-align:center;-webkit-appearance:none}
 .qin:focus{outline:none;border-color:var(--ac)}
-.qmt{font-size:10px;color:var(--lt3);flex:1;text-align:right}
+.qmt{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:88px;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:700;
+  color:#fff;
+  flex-shrink:0;
+}
+
+.qmt-unc{
+  background:#27ae60;
+}
+
+.qmt-be{
+  background:#e74c3c;
+}
+
+.qmt-proof{
+  background:#2980b9;
+}
 
 /* MINT LETTERS */
 .mll{background:#f8f5f5;border-bottom:1px solid var(--lbr);padding:10px 14px}
@@ -1150,32 +1173,31 @@ else{
 
   TPS.forEach(tp=>{
 
-    exp.innerHTML += `
-      <div class="qrow">
+   exp.innerHTML += `
+  <div class="qrow">
 
-        <span class="qtl">${tp}</span>
+    <span class="qtl">${tp}</span>
 
-        <input
-          class="qin"
-          type="number"
-          min="0"
-          inputmode="numeric"
-          value="${(data.qty||{})[tp]||0}"
-          onclick="event.stopPropagation()"
-          onchange="sCQ('${key}','${tp}',this.value)"
-        >
+    <input
+      class="qin"
+      type="number"
+      min="0"
+      inputmode="numeric"
+      value="${(data.qty||{})[tp]||0}"
+      onclick="event.stopPropagation()"
+      onchange="sCQ('${key}','${tp}',this.value)"
+    >
 
-<div class="mb mini">
-  <span class="mbt">${tp}</span>
-  <span class="mbv">${fm(mt[tp])}</span>
-</div>
+    <span class="qmt qmt-${tp.toLowerCase()}">
+      ${fm(mt[tp])}
+    </span>
 
-      </div>
-    `;
+  </div>
+`; 
 
   });
 
-} // <- ESTA chaveta faltava
+} 
 
 exp.innerHTML += `
   <div style="display:flex;justify-content:flex-end;margin-top:10px;">
