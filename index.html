@@ -688,209 +688,262 @@ function oSt(g,tp){
   go('s-stats');
 }
 
-// ── CIRCULAÇÃO ────────────────────────────────────
-function rCL(){
-  const list=document.getElementById('c-list');list.innerHTML='';
-  COUNTRIES.forEach(c=>{
-    const yrs=CY[c.name]||[];const ml=(c.name==='Alemanha'&&cfg.deLetters)?5:1;const tot=yrs.length*8*ml;
-    let own=0;yrs.forEach(y=>DNS.forEach(d=>{const v=gC(c.name,y,d);if(c.name==='Alemanha'&&cfg.deLetters){DEL.forEach(l=>{if(tQ((v.deQty||{})[l]||{}))own++;});}else{if(isOwn(v))own++;}}));
-    const cls=own===0?'':own===tot?'dn':'pt';
-    const row=document.createElement('div');row.className='clr';
-   row.innerHTML=`
-  <span class="flg">${c.flag}</span>
-
- <div class="cni">
-
-  <div class="cnn">${c.name}</div>
-
-  <div class="cns">
-   ${yrs.length} anos · ${tot} moedas · ${tot ? Math.round((own/tot)*100) : 0}%
-  </div>
-
-  <div class="cbg-wrapper">
-    <div
-      class="cbg-bar"
-      style="
-        width:${tot ? Math.round((own/tot)*100) : 0}%;
-        background:hsl(${tot ? Math.round((own/tot)*120) : 0}, 85%, 45%);
-      ">
-    </div>
-  </div>
-
-</div>
-
-<span class="cbg ${cls}">
-  ${own}/${tot}
-</span>
-
-  <span style="font-size:16px;color:var(--lt3);margin-left:4px">›</span>
-`;
-    row.onclick=()=>oCMoedas(c);list.appendChild(row);
-  });
-}
-
-let curCCtry=null;
-function oCMoedas(c){
-  curCCtry=c;
-  document.getElementById('cm-ttl').textContent=c.flag+' '+c.name;
-  document.getElementById('cm-sub').textContent='Circulação · '+((CY[c.name]||[]).length*8*(c.name==='Alemanha'&&cfg.deLetters?5:1))+' moedas';
-  rCoinList(c);
-  go('s-cmoedas');
-}
-
 function rCoinList(c){
-  const cont=document.getElementById('cm-list');cont.innerHTML='';
+
+  const cont=document.getElementById('cm-list');
+  cont.innerHTML='';
+
   const isDE=(c.name==='Alemanha'&&cfg.deLetters);
-  const yrs=(CY[c.name]||[]).slice().sort((a,b)=>b-a);
+
+  const yrs=(CY[c.name]||[])
+    .slice()
+    .sort((a,b)=>b-a);
+
   yrs.forEach(yr=>{
-    const sep=document.createElement('div');sep.className='yr-sep';sep.textContent=yr;cont.appendChild(sep);
+
+    const sep=document.createElement('div');
+    sep.className='yr-sep';
+    sep.textContent=yr;
+
+    cont.appendChild(sep);
+
     DNS.forEach(d=>{
+
       const key=c.name+'|'+yr+'|'+d;
-      const data=gC(c.name,yr,d);const own=isOwn(data,isDE);const cnt=oCnt(data,isDE);const mt=DMT[d]||{};
+
+      const data=gC(c.name,yr,d);
+
+      const own=isOwn(data,isDE);
+      const cnt=oCnt(data,isDE);
+      const mt=DMT[d]||{};
+
       const open=data.open||false;
-      // coin row
-      const row=document.createElement('div');row.className='ci';
-      row.innerHTML=`<div class="ci-img ${own?'owned':''}">${d}</div><div class="ci-info"><div class="ci-name">${DNAMES[d]}</div><div class="ci-serie circ">Circulação${isDE?' · <strong style="color:var(--gold)">A D F G J</strong>':''}</div>${mBars(mt)}</div><div class="ci-right"><div class="ci-ctry"><span class="ci-ctry-flag">${c.flag}</span><div class="ci-ctry-info"><span class="ci-ctry-name">${c.name}</span><span class="ci-ctry-year">${yr}</span></div></div><div class="qty-d ${own?'hv':''}">${own?cnt:0} <span>▼</span></div></div>`;
-      row.onclick=()=>{
-        if(!cD[key])cD[key]={qty:eq(),deQty:edq(),open:false};
-        if(!isOwn(cD[key])){if(isDE)cD[key].deQty.A.UNC=1;else cD[key].qty.UNC=1;cD[key].open=true;}
-        else if(!cD[key].open){cD[key].open=true;}
-        else{
-  cD[key].open=false;
-}
-        sv();updSt();rCoinList(c);
-      };
-      cont.appendChild(row);
-      // expand section
-      if(open){
-        const exp=document.createElement('div');
-        if(isDE){
-          exp.className='mll';
-          exp.innerHTML=`<div class="mllt">Casa da Moeda</div>`;
-          DEL.forEach(l=>{
-            const lq=(data.deQty||{})[l]||{UNC:0,BE:0,PROOF:0};
-            let hr=`<div class="mllr"><div class="mllb">${l}</div><div class="mllc">${DEM[l]}</div>`;
-            if(open){
 
-  const exp=document.createElement('div');
+      // moeda
+      const row=document.createElement('div');
 
-  if(isDE){
+      row.className='ci';
 
-    exp.className='mll';
-    exp.innerHTML=`<div class="mllt">Casa da Moeda</div>`;
+      row.innerHTML=`
+        <div class="ci-img ${own?'owned':''}">
+          ${d}
+        </div>
 
-    DEL.forEach(l=>{
+        <div class="ci-info">
 
-      const lq=(data.deQty||{})[l]||{UNC:0,BE:0,PROOF:0};
-
-      let hr=`
-        <div class="mllr">
-          <div class="mllb">${l}</div>
-          <div class="mllc">${DEM[l]}</div>
-      `;
-
-      TPS.forEach(tp=>{
-        hr+=`
-          <div class="mllqw">
-            <span class="mllql">${tp}</span>
-
-            <input
-              class="mllqi"
-              type="number"
-              min="0"
-              inputmode="numeric"
-              value="${lq[tp]||0}"
-              onclick="event.stopPropagation()"
-              onchange="sDEQ('${key}','${l}','${tp}',this.value,'c')"
-            >
+          <div class="ci-name">
+            ${DNAMES[d]}
           </div>
-        `;
-      });
 
-      hr+=`</div>`;
+          <div class="ci-serie circ">
+            Circulação
+            ${isDE?' · <strong style="color:var(--gold)">A D F G J</strong>':''}
+          </div>
 
-      exp.innerHTML+=hr;
+          ${mBars(mt)}
 
-    });
+        </div>
 
-    exp.innerHTML += `
-      <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-        <button
-          onclick="saveCirculation('${key}',this)"
-          style="
-            background:#27ae60;
-            color:white;
-            border:none;
-            border-radius:10px;
-            padding:10px 18px;
-            font-size:13px;
-            font-weight:600;
-            cursor:pointer;
-          "
-        >
-          ✅ OK
-        </button>
-      </div>
-    `;
+        <div class="ci-right">
 
-  } else {
+          <div class="ci-ctry">
 
-    exp.className='ci-expand';
+            <span class="ci-ctry-flag">
+              ${c.flag}
+            </span>
 
-    TPS.forEach(tp=>{
+            <div class="ci-ctry-info">
 
-      exp.innerHTML += `
-        <div class="qrow">
+              <span class="ci-ctry-name">
+                ${c.name}
+              </span>
 
-          <span class="qtl">${tp}</span>
+              <span class="ci-ctry-year">
+                ${yr}
+              </span>
 
-          <input
-            class="qin"
-            type="number"
-            min="0"
-            inputmode="numeric"
-            value="${(data.qty||{})[tp]||0}"
-            onclick="event.stopPropagation()"
-            onchange="sCQ('${key}','${tp}',this.value)"
-          >
+            </div>
 
-          <span class="qmt">
-            Tiragem: ${fm(mt[tp])}
-          </span>
+          </div>
+
+          <div class="qty-d ${own?'hv':''}">
+            ${own?cnt:0} <span>▼</span>
+          </div>
 
         </div>
       `;
 
+      row.onclick=()=>{
+
+        if(!cD[key]){
+          cD[key]={
+            qty:eq(),
+            deQty:edq(),
+            open:false
+          };
+        }
+
+        if(!isOwn(cD[key])){
+
+          if(isDE)
+            cD[key].deQty.A.UNC=1;
+          else
+            cD[key].qty.UNC=1;
+
+          cD[key].open=true;
+        }
+
+        else if(!cD[key].open){
+          cD[key].open=true;
+        }
+
+        else{
+          cD[key].open=false;
+        }
+
+        sv();
+        updSt();
+        rCoinList(c);
+
+      };
+
+      cont.appendChild(row);
+
+      // expandido
+      if(open){
+
+        const exp=document.createElement('div');
+
+        // ALEMANHA
+        if(isDE){
+
+          exp.className='mll';
+
+          exp.innerHTML=`
+            <div class="mllt">
+              Casa da Moeda
+            </div>
+          `;
+
+          DEL.forEach(l=>{
+
+            const lq=(data.deQty||{})[l]||{
+              UNC:0,
+              BE:0,
+              PROOF:0
+            };
+
+            let hr=`
+              <div class="mllr">
+
+                <div class="mllb">${l}</div>
+
+                <div class="mllc">
+                  ${DEM[l]}
+                </div>
+            `;
+
+            TPS.forEach(tp=>{
+
+              hr+=`
+                <div class="mllqw">
+
+                  <span class="mllql">
+                    ${tp}
+                  </span>
+
+                  <input
+                    class="mllqi"
+                    type="number"
+                    min="0"
+                    inputmode="numeric"
+                    value="${lq[tp]||0}"
+                    onclick="event.stopPropagation()"
+                    onchange="sDEQ('${key}','${l}','${tp}',this.value,'c')"
+                  >
+
+                </div>
+              `;
+
+            });
+
+            hr+=`</div>`;
+
+            exp.innerHTML+=hr;
+
+          });
+
+        }
+
+        // NORMAL
+        else{
+
+          exp.className='ci-expand';
+
+          TPS.forEach(tp=>{
+
+            exp.innerHTML+=`
+
+              <div class="qrow">
+
+                <span class="qtl">
+                  ${tp}
+                </span>
+
+                <input
+                  class="qin"
+                  type="number"
+                  min="0"
+                  inputmode="numeric"
+                  value="${(data.qty||{})[tp]||0}"
+                  onclick="event.stopPropagation()"
+                  onchange="sCQ('${key}','${tp}',this.value)"
+                >
+
+                <span class="qmt">
+                  Tiragem: ${fm(mt[tp])}
+                </span>
+
+              </div>
+            `;
+
+          });
+
+        }
+
+        // botão guardar
+        exp.innerHTML+=`
+
+          <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+
+            <button
+              onclick="saveCirculation('${key}',this)"
+              style="
+                background:#27ae60;
+                color:white;
+                border:none;
+                border-radius:10px;
+                padding:10px 18px;
+                font-size:13px;
+                font-weight:600;
+                cursor:pointer;
+              "
+            >
+              ✅ OK
+            </button>
+
+          </div>
+        `;
+
+        cont.appendChild(exp);
+
+      }
+
     });
 
-    exp.innerHTML += `
-      <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-        <button
-          onclick="saveCirculation('${key}',this)"
-          style="
-            background:#27ae60;
-            color:white;
-            border:none;
-            border-radius:10px;
-            padding:10px 18px;
-            font-size:13px;
-            font-weight:600;
-            cursor:pointer;
-          "
-        >
-          ✅ OK
-        </button>
-      </div>
-    `;
-
-  }
-
-  cont.appendChild(exp);
+  });
 
 }
-function sCQ(k,tp,v){if(!cD[k])cD[k]={qty:eq(),deQty:edq(),open:true};cD[k].qty[tp]=Math.max(0,parseInt(v)||0);sv();updSt();}
-function sDEQ(k,l,tp,v,t){const store=t==='c'?cD:mD;if(!store[k])store[k]={qty:eq(),deQty:edq(),open:true};if(!store[k].deQty)store[k].deQty=edq();if(!store[k].deQty[l])store[k].deQty[l]={UNC:0,BE:0,PROOF:0};store[k].deQty[l][tp]=Math.max(0,parseInt(v)||0);sv();updSt();}
-
 // ── COMEMORATIVAS ─────────────────────────────────
 let curMCtry=null,curFlt='t';
 
