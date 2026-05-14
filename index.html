@@ -1253,17 +1253,20 @@ function openImgModal(src){
 function closeImgModal(){
   document.getElementById('imgModal').style.display='none';
 }
-  function applyLang(){
+function applyLang(){
 
-  document.getElementById('txt-home').textContent=t('home');
+  const h=document.getElementById('txt-home');
+  const c=document.getElementById('txt-circulation');
+  const m=document.getElementById('txt-commemorative');
+  const s=document.getElementById('txt-settings');
 
-  document.getElementById('txt-circulation').textContent=t('circulation');
-
-  document.getElementById('txt-commemorative').textContent=t('commemorative');
-
-  document.getElementById('txt-settings').textContent=t('settings');
+  if(h)h.textContent=t('home');
+  if(c)c.textContent=t('circulation');
+  if(m)m.textContent=t('commemorative');
+  if(s)s.textContent=t('settings');
 
 }
+  
 // ── INIT ──────────────────────────────────────────
 initCfg();
 applyLang();
