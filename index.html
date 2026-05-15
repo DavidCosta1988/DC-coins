@@ -1393,7 +1393,7 @@ else if(curFlt==='s')
     const sep=document.createElement('div');sep.className='yr-sep';sep.textContent=yr;cont.appendChild(sep);
     byYear[yr].forEach(m=>{
       const key=c.name+'|'+m.year+'|'+m.name;
-      const isDE=(m.deMints&&cfg.deLetters);
+      const isDE=(c.name==='Alemanha' && m.deMints && cfg.deLetters);
       const data=gM(c.name,m.year,m.name);
 
 if(!data.deQty){
