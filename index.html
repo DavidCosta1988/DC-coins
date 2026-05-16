@@ -487,61 +487,207 @@ html,body{
 
 <!-- SETTINGS -->
 <div class="sc" id="s-sett" style="background:var(--dk)">
-  <div class="hd dk"><div class="hdb" onclick="goH()">←</div><div><div class="hdt">Definições</div><div class="hds">Personaliza a tua coleção</div></div></div>
-  <div class="sa" style="background:var(--dk)"><div class="stw">
-    <div class="sts">
-      <div class="stst">🇩🇪 Alemanha — Casas da Moeda</div>
-      <div class="stc">
-        <div class="str"><span class="sti">🏛️</span><div class="stnfo"><div class="stl">Coleção por letra</div><div class="stss">Registar por casa da moeda (A, D, F, G, J)</div></div><div class="tog" id="tg-de" onclick="togS('deLetters')"><div class="tok"></div></div></div>
-      </div>
-      <div class="sib" id="de-info" style="display:none"><strong style="color:var(--gold2)">Casas activas:</strong> <strong>A</strong> Berlim · <strong>D</strong> Munique · <strong>F</strong> Stuttgart · <strong>G</strong> Karlsruhe · <strong>J</strong> Hamburgo</div>
+
+  <div class="hd dk">
+    <div class="hdb" onclick="goH()">←</div>
+
+    <div>
+      <div class="hdt">Definições</div>
+      <div class="hds">Personaliza a tua coleção</div>
     </div>
-    <div class="sts">
-      <div class="stst">🏅 Comemorativas</div>
-      <div class="stc">
-        <div class="str"><span class="sti">🎨</span><div class="stnfo"><div class="stl">Mostrar Coloridas</div><div class="stss">Ativar separador de moedas coloridas</div></div><div class="tog on" id="tg-col" onclick="togS('showColoridas')"><div class="tok"></div></div></div>
-        <div class="str"><span class="sti">📋</span><div class="stnfo"><div class="stl">Mostrar Séries Comuns</div><div class="stss">Ativar separador de séries comuns</div></div><div class="tog on" id="tg-com" onclick="togS('showComuns')"><div class="tok"></div></div></div>
-      </div>
-      <div class="sib">Quando desativadas, as moedas aparecem todas juntas em "Comemorativas".</div>
-    </div>
-    <div class="sts">
-      <div class="stst">📊 Dados</div>
-      <div class="stc">
-        <div class="str" onclick="expD()"><span class="sti">📤</span><div class="stnfo"><div class="stl">Exportar coleção</div><div class="stss">Copiar dados para backup</div></div><span style="color:var(--tw3)">›</span></div>
-        <div class="str" onclick="clrD()"><span class="sti">🗑️</span><div class="stnfo"><div class="stl">Apagar tudo</div><div class="stss">Remove todos os dados</div></div><span style="color:var(--rd)">›</span></div>
-      </div>
-    </div>
-  <div class="sts">
-  <div class="stst">🔒 Privacidade</div>
-
-  <div class="stc">
-
-    <div class="str" onclick="go('s-priv')">
-      <span class="sti">📋</span>
-
-      <div class="stnfo">
-        <div class="stl">Política de Privacidade</div>
-        <div class="stss">Como tratamos os teus dados</div>
-      </div>
-
-      <span style="color:var(--tw3)">›</span>
-    </div>
-
-    <div class="str" onclick="go('s-terms')">
-      <span class="sti">⚖️</span>
-
-      <div class="stnfo">
-        <div class="stl">Termos de Utilização</div>
-
-        <div class="stss">
-          Responsabilidade e utilização da app
-        </div>
-      </div>
-
-      <span style="color:var(--tw3)">›</span>
-    </div>
-
   </div>
+
+  <div class="sa" style="background:var(--dk)">
+    <div class="stw">
+
+      <!-- ALEMANHA -->
+      <div class="sts">
+
+        <div class="stst">🇩🇪 Alemanha — Casas da Moeda</div>
+
+        <div class="stc">
+
+          <div class="str">
+            <span class="sti">🏛️</span>
+
+            <div class="stnfo">
+              <div class="stl">Coleção por letra</div>
+
+              <div class="stss">
+                Registar por casa da moeda (A, D, F, G, J)
+              </div>
+            </div>
+
+            <div class="tog" id="tg-de" onclick="togS('deLetters')">
+              <div class="tok"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sib" id="de-info" style="display:none">
+          <strong style="color:var(--gold2)">Casas activas:</strong>
+
+          <strong>A</strong> Berlim ·
+          <strong>D</strong> Munique ·
+          <strong>F</strong> Stuttgart ·
+          <strong>G</strong> Karlsruhe ·
+          <strong>J</strong> Hamburgo
+        </div>
+
+      </div>
+
+      <!-- COMEMORATIVAS -->
+      <div class="sts">
+
+        <div class="stst">🏅 Comemorativas</div>
+
+        <div class="stc">
+
+          <div class="str">
+            <span class="sti">🎨</span>
+
+            <div class="stnfo">
+              <div class="stl">Mostrar Coloridas</div>
+
+              <div class="stss">
+                Ativar separador de moedas coloridas
+              </div>
+            </div>
+
+            <div class="tog on" id="tg-col" onclick="togS('showColoridas')">
+              <div class="tok"></div>
+            </div>
+          </div>
+
+          <div class="str">
+            <span class="sti">📋</span>
+
+            <div class="stnfo">
+              <div class="stl">Mostrar Séries Comuns</div>
+
+              <div class="stss">
+                Ativar separador de séries comuns
+              </div>
+            </div>
+
+            <div class="tog on" id="tg-com" onclick="togS('showComuns')">
+              <div class="tok"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sib">
+          Quando desativadas, as moedas aparecem todas juntas em "Comemorativas".
+        </div>
+
+      </div>
+
+      <!-- DADOS -->
+      <div class="sts">
+
+        <div class="stst">📊 Dados</div>
+
+        <div class="stc">
+
+          <div class="str" onclick="expD()">
+            <span class="sti">📤</span>
+
+            <div class="stnfo">
+              <div class="stl">Exportar coleção</div>
+              <div class="stss">Copiar dados para backup</div>
+            </div>
+
+            <span style="color:var(--tw3)">›</span>
+          </div>
+
+          <div class="str" onclick="clrD()">
+            <span class="sti">🗑️</span>
+
+            <div class="stnfo">
+              <div class="stl">Apagar tudo</div>
+              <div class="stss">Remove todos os dados</div>
+            </div>
+
+            <span style="color:var(--rd)">›</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PRIVACIDADE -->
+      <div class="sts">
+
+        <div class="stst">🔒 Privacidade</div>
+
+        <div class="stc">
+
+          <div class="str" onclick="go('s-priv')">
+
+            <span class="sti">📋</span>
+
+            <div class="stnfo">
+              <div class="stl">Política de Privacidade</div>
+
+              <div class="stss">
+                Como tratamos os teus dados
+              </div>
+            </div>
+
+            <span style="color:var(--tw3)">›</span>
+
+          </div>
+
+          <div class="str" onclick="go('s-terms')">
+
+            <span class="sti">⚖️</span>
+
+            <div class="stnfo">
+              <div class="stl">Termos de Utilização</div>
+
+              <div class="stss">
+                Responsabilidade e utilização da app
+              </div>
+            </div>
+
+            <span style="color:var(--tw3)">›</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SOBRE -->
+      <div class="sts">
+
+        <div class="stst">ℹ️ Sobre</div>
+
+        <div class="stc">
+
+          <div class="str">
+
+            <span class="sti">🪙</span>
+
+            <div class="stnfo">
+              <div class="stl">DC coins</div>
+
+              <div class="stss">
+                Versão 1.0 · Coleção de moedas Euro
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <!-- PRIVACY -->
