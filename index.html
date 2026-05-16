@@ -381,6 +381,34 @@ html,body{
   background:#2980b9;
 }
 
+/* ── LEGAL PAGES ───────────────────────── */
+
+.priv-body{
+  padding:20px;
+  color:var(--lt);
+  line-height:1.6;
+  font-size:14px;
+}
+
+.priv-body h3{
+  color:var(--gold);
+  margin:22px 0 10px;
+  font-size:16px;
+}
+
+.priv-body p{
+  margin:10px 0;
+}
+
+.priv-body ul{
+  padding-left:20px;
+  margin:10px 0;
+}
+
+.priv-body li{
+  margin:6px 0;
+}
+
 </style>
 </head>
 <body>
@@ -483,42 +511,179 @@ html,body{
         <div class="str" onclick="clrD()"><span class="sti">🗑️</span><div class="stnfo"><div class="stl">Apagar tudo</div><div class="stss">Remove todos os dados</div></div><span style="color:var(--rd)">›</span></div>
       </div>
     </div>
-    <div class="sts">
-      <div class="stst">🔒 Privacidade</div>
-      <div class="stc">
-        <div class="str" onclick="go('s-priv')"><span class="sti">📋</span><div class="stnfo"><div class="stl">Política de Privacidade</div><div class="stss">Como tratamos os teus dados</div></div><span style="color:var(--tw3)">›</span></div>
+  <div class="sts">
+  <div class="stst">🔒 Privacidade</div>
+
+  <div class="stc">
+
+    <div class="str" onclick="go('s-priv')">
+      <span class="sti">📋</span>
+
+      <div class="stnfo">
+        <div class="stl">Política de Privacidade</div>
+        <div class="stss">Como tratamos os teus dados</div>
       </div>
+
+      <span style="color:var(--tw3)">›</span>
     </div>
-    <div class="sts">
-      <div class="stst">ℹ️ Sobre</div>
-      <div class="stc"><div class="str"><span class="sti">🪙</span><div class="stnfo"><div class="stl">DC coins</div><div class="stss">Versão 1.0 · Coleção de moedas Euro</div></div></div></div>
+
+    <div class="str" onclick="go('s-terms')">
+      <span class="sti">⚖️</span>
+
+      <div class="stnfo">
+        <div class="stl">Termos de Utilização</div>
+
+        <div class="stss">
+          Responsabilidade e utilização da app
+        </div>
+      </div>
+
+      <span style="color:var(--tw3)">›</span>
     </div>
-  </div></div>
+
+  </div>
 </div>
 
 <!-- PRIVACY -->
 <div class="sc" id="s-priv" style="background:var(--dk)">
-  <div class="hd dk"><div class="hdb" onclick="go('s-sett')">←</div><div><div class="hdt">Política de Privacidade</div></div></div>
+  <div class="hd dk">
+    <div class="hdb" onclick="go('s-sett')">←</div>
+    <div><div class="hdt">Política de Privacidade</div></div>
+  </div>
+
   <div class="sa" style="background:var(--dk)">
     <div class="priv-body">
+
       <h3>DC coins — Política de Privacidade</h3>
-      <p><strong>Dados recolhidos:</strong> A DC coins armazena os dados da tua coleção <strong style="color:var(--gn)">exclusivamente no teu dispositivo</strong>. Nenhum dado é enviado para servidores externos.</p>
-      <p><strong>O que guardamos:</strong> Registo de moedas, quantidades, tipos (UNC/BE/PROOF) e preferências — tudo localmente.</p>
-      <p><strong>O que NÃO recolhemos:</strong> Nome, email, localização, dados do dispositivo, comportamento de utilização ou qualquer dado pessoal.</p>
-      <p><strong>Publicidade:</strong> A app não contém publicidade nem SDKs de terceiros.</p>
-      <p><strong>Os teus direitos:</strong> Podes exportar ou apagar todos os dados a qualquer momento nas Definições.</p>
-      <p style="color:var(--tw3);font-size:11px;margin-top:16px">Para questões: [o teu email]</p>
+
+      <p>
+        <strong>Dados recolhidos:</strong>
+        A DC coins armazena os dados da tua coleção
+        <strong style="color:var(--gn)">
+          exclusivamente no teu dispositivo
+        </strong>.
+        Nenhum dado é enviado para servidores externos.
+      </p>
+
+      <p>
+        <strong>O que guardamos:</strong>
+        Registo de moedas, quantidades,
+        tipos (UNC/BE/PROOF) e preferências — tudo localmente.
+      </p>
+
+      <p>
+        <strong>O que NÃO recolhemos:</strong>
+        Nome, email, localização,
+        dados do dispositivo, comportamento de utilização
+        ou qualquer dado pessoal.
+      </p>
+
+      <p>
+        <strong>Publicidade:</strong>
+        A app não contém publicidade nem SDKs de terceiros.
+      </p>
+
+      <p>
+        <strong>Os teus direitos:</strong>
+        Podes exportar ou apagar todos os dados
+        a qualquer momento nas Definições.
+      </p>
+
+      <p style="color:var(--tw3);font-size:11px;margin-top:16px">
+        Para questões: [o teu email]
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<!-- TERMOS -->
+<div class="sc" id="s-terms" style="background:var(--dk)">
+
+  <div class="hd dk">
+    <div class="hdb" onclick="go('s-sett')">←</div>
+    <div><div class="hdt">Termos de Utilização</div></div>
+  </div>
+
+  <div class="sa" style="background:var(--dk)">
+    <div class="priv-body">
+
+      <h3>DC coins — Termos de Utilização</h3>
+
+      <p>
+        Ao utilizar a app DC coins,
+        concordas com os seguintes termos.
+      </p>
+
+      <h3>Utilização da app</h3>
+
+      <p>
+        A DC coins destina-se exclusivamente
+        à gestão pessoal de coleções de moedas euro.
+      </p>
+
+      <h3>Armazenamento local</h3>
+
+      <p>
+        Todos os dados são armazenados
+        localmente no teu dispositivo.
+      </p>
+
+      <h3>Limitação de responsabilidade</h3>
+
+      <p>
+        O desenvolvedor da DC coins
+        não é responsável por:
+      </p>
+
+      <ul>
+        <li>Perda de dados</li>
+        <li>Eliminação acidental da coleção</li>
+        <li>Incompatibilidades do dispositivo</li>
+        <li>Erros de informação</li>
+        <li>Interrupções da app</li>
+      </ul>
+
+      <h3>Independência</h3>
+
+      <p>
+        A DC coins é uma aplicação independente
+        e não afiliada ao Banco Central Europeu
+        nem a entidades oficiais emissoras de moedas.
+      </p>
+
+      <h3>Última atualização</h3>
+
+      <p>Maio de 2026</p>
+
     </div>
   </div>
 </div>
 
 </div><!-- /screens -->
+
 <div class="bnav">
-  <div class="bi on" id="bn-h" onclick="goH()"><div class="bii">🏠</div><div class="bil" id="txt-home"></div></div>
-  <div class="bi" id="bn-c" onclick="go('s-circ')"><div class="bii">🪙</div><div class="bil" id="txt-circulation"></div></div>
-  <div class="bi" id="bn-m" onclick="go('s-comm')"><div class="bii">🏅</div><div class="bil" id="txt-commemorative"></div></div>
-  <div class="bi" id="bn-s" onclick="go('s-sett')"><div class="bii">⚙️</div><div class="bil" id="txt-settings"></div></div>
-</div>
+
+  <div class="bi on" id="bn-h" onclick="goH()">
+    <div class="bii">🏠</div>
+    <div class="bil" id="txt-home"></div>
+  </div>
+
+  <div class="bi" id="bn-c" onclick="go('s-circ')">
+    <div class="bii">🪙</div>
+    <div class="bil" id="txt-circulation"></div>
+  </div>
+
+  <div class="bi" id="bn-m" onclick="go('s-comm')">
+    <div class="bii">🏅</div>
+    <div class="bil" id="txt-commemorative"></div>
+  </div>
+
+  <div class="bi" id="bn-s" onclick="go('s-sett')">
+    <div class="bii">⚙️</div>
+    <div class="bil" id="txt-settings"></div>
+  </div>
+
 </div>
 
 <script>
@@ -905,7 +1070,7 @@ function mSt(){let t=0,h=0,r=0;COUNTRIES.forEach(ct=>{(CM[ct.name]||[]).forEach(
 function updSt(){const c=cSt(),m=mSt();document.getElementById('v-ct').textContent=c.t;document.getElementById('v-ch').textContent=c.h;document.getElementById('v-cm').textContent=c.m;document.getElementById('v-cr').textContent=c.r;document.getElementById('v-mt').textContent=m.t;document.getElementById('v-mh').textContent=m.h;document.getElementById('v-mm').textContent=m.m;document.getElementById('v-mr').textContent=m.r;}
 
 // ── NAVIGATION ───────────────────────────────────
-const NM={'s-home':'bn-h','s-stats':'bn-h','s-circ':'bn-c','s-cmoedas':'bn-c','s-comm':'bn-m','s-comm-d':'bn-m','s-sett':'bn-s','s-priv':'bn-s'};
+const NM={'s-home':'bn-h','s-stats':'bn-h','s-circ':'bn-c','s-cmoedas':'bn-c','s-comm':'bn-m','s-comm-d':'bn-m','s-sett':'bn-s','s-priv':'bn-s','s-terms':'bn-s'};
 function go(id){document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('.bi').forEach(b=>b.classList.remove('on'));const bn=NM[id];if(bn)document.getElementById(bn).classList.add('on');}
 function goH(){updSt();go('s-home');}
 function goS(){go('s-sett');}
