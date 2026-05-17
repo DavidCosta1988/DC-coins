@@ -1244,9 +1244,63 @@ function updSt(){const c=cSt(),m=mSt();document.getElementById('v-ct').textConte
 
 // ── NAVIGATION ───────────────────────────────────
 const NM={'s-home':'bn-h','s-stats':'bn-h','s-circ':'bn-c','s-cmoedas':'bn-c','s-comm':'bn-m','s-comm-d':'bn-m','s-sett':'bn-s','s-priv':'bn-s','s-terms':'bn-s'};
-function go(id){document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('.bi').forEach(b=>b.classList.remove('on'));const bn=NM[id];if(bn)document.getElementById(bn).classList.add('on');}
-function goH(){updSt();go('s-home');}
-function goS(){go('s-sett');}
+function go(id,addHistory=true){
+
+  document.querySelectorAll('.sc').forEach(s=>{
+    s.classList.remove('on');
+  });
+
+  document.getElementById(id).classList.add('on');
+
+  document.querySelectorAll('.bi').forEach(b=>{
+    b.classList.remove('on');
+  });
+
+  const bn=NM[id];
+
+  if(bn){
+    document.getElementById(bn).classList.add('on');
+  }
+
+  if(addHistory){
+    history.pushState(
+      {screen:id},
+      '',
+      '#'+id
+    );
+  }
+
+}
+
+function goH(){
+  updSt();
+  go('s-home');
+}
+
+function goS(){
+  go('s-sett');
+}
+
+/* ── BACK BUTTON MOBILE ───────────────── */
+
+window.addEventListener('popstate',e=>{
+
+  const screen=
+    (e.state && e.state.screen)
+      ? e.state.screen
+      : 's-home';
+
+  go(screen,false);
+
+});
+
+/* estado inicial */
+
+history.replaceState(
+  {screen:'s-home'},
+  '',
+  '#s-home'
+);
 
 // ── SETTINGS ─────────────────────────────────────
 function togS(k){cfg[k]=!cfg[k];sv();initCfg();updSt();}
