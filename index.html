@@ -1511,40 +1511,35 @@ function rCoinList(c){
         </div>
       `;
 
-      row.onclick=()=>{
+     row.onclick=()=>{
 
-        if(!cD[key]){
+  if(!cD[key]){
 
-          cD[key]={
-            qty:eq(),
-            deQty:edq(),
-            open:false
-          };
-        }
+    cD[key]={
+      qty:eq(),
+      deQty:edq(),
+      open:true
+    };
 
-        if(!isOwn(cD[key])){
+  }
 
-          if(isDE){
-            cD[key].deQty.A.UNC=1;
-          }else{
-            cD[key].qty.UNC=1;
-          }
+  else if(!cD[key].open){
 
-          cD[key].open=true;
+    cD[key].open=true;
 
-        }else if(!cD[key].open){
+  }
 
-          cD[key].open=true;
+  else{
 
-        }else{
+    cD[key].open=false;
 
-          cD[key].open=false;
-        }
+  }
 
-        sv();
-        updSt();
-        rCoinList(c);
-      };
+  sv();
+  updSt();
+  rCoinList(c);
+
+};
 
       cont.appendChild(row);
 
@@ -1849,26 +1844,33 @@ ${
 </div>`;
 
      row.onclick=()=>{
-  if(!mD[key])mD[key]={qty:eq(),deQty:edq(),open:false};
 
-  if(!isOwn(mD[key])){
-    if(isDE)mD[key].deQty.A.UNC=1;
-    else mD[key].qty.UNC=1;
+  if(!mD[key]){
 
-    mD[key].open=true;
+    mD[key]={
+      qty:eq(),
+      deQty:edq(),
+      open:true
+    };
+
   }
 
   else if(!mD[key].open){
+
     mD[key].open=true;
+
   }
 
   else{
+
     mD[key].open=false;
+
   }
 
   sv();
   updSt();
   rMCoins(c);
+
 };
 
 cont.appendChild(row);
