@@ -457,6 +457,7 @@ html,body{
 
 <!-- HOME -->
 <div class="sc on" id="s-home" style="background:var(--dk)">
+  <div id="container"></div>
 <div class="sa" style="background:var(--dk)">
   <div class="logo-a">
     <div class="logo-img">
@@ -1094,6 +1095,48 @@ const CM={
 ]
 
 };
+function getCountriesSorted(cm) {
+  return Object.keys(cm).sort((a, b) =>
+    a.localeCompare(b, 'pt', { sensitivity: 'base' })
+  );
+}
+
+function getCoinsSorted(coins) {
+  return coins.slice().sort((a, b) => b.year - a.year);
+}
+function renderCoins(data, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  const countries = getCountriesSorted(data);
+
+  countries.forEach(country => {
+    const coins = getCoinsSorted(data[country]);
+
+    const countryBlock = document.createElement('div');
+    countryBlock.className = 'country-block';
+
+    const title = document.createElement('h2');
+    title.textContent = country;
+    countryBlock.appendChild(title);
+
+    coins.forEach(coin => {
+      const coinItem = document.createElement('div');
+      coinItem.className = 'coin-item';
+
+      coinItem.innerHTML = `
+        <div><strong>${coin.year}</strong> - ${coin.name}</div>
+      `;
+
+      countryBlock.appendChild(coinItem);
+    });
+
+    container.appendChild(countryBlock);
+  });
+}
+
 // ── STORAGE ──────────────────────────────────────
 let cD={},mD={},cfg={
   deLetters:false,
