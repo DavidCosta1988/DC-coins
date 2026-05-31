@@ -1128,8 +1128,13 @@ function renderCoins(data, containerId) {
       coinItem.className = 'coin-item';
 
       coinItem.innerHTML = `
-        <div><strong>${coin.year}</strong> - ${coin.name}</div>
-      `;
+  <div style="display:flex;align-items:center;gap:10px">
+    ${coin.img ? `<img src="${coin.img}" class="coin-photo">` : ''}
+    <div>
+      <strong>${coin.year}</strong> - ${coin.name}
+    </div>
+  </div>
+`;
 
       countryBlock.appendChild(coinItem);
     });
